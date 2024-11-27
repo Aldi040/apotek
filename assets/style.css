@@ -80,4 +80,51 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
     background-color: #1a2236;
 }
+.search-bar {
+    width: 50%;
+    max-width: 600px; /* Atur lebar maksimal jika diinginkan */
+}
+
+/* Gaya modal kustom */
+.modal-content {
+    border-radius: 8px; /* Membuat sudut lebih melengkung */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan pada modal */
+    background-color: #232f4d;
+}
+
+.modal-header {
+    padding: 20px;
+    ackground-color: #2a2f45;/* Ganti dengan warna tema Anda */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.modal-body {
+    padding: 20px;
+    background-color: #232f4d;
+}
+.modal-form{
+    background-color: #232f4d;
+}
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    ackground-color: #232f4d;
+}
+
+.form-check-label {
+    font-size: 14px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+/* Responsif untuk modal */
+@media (max-width: 768px) {
+    .modal-dialog {
+        max-width: 100%;
+    }
+}
+
 
