@@ -1,0 +1,83 @@
+body {
+    background-color: #1a2236;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+.sidebar {
+    background-color: #1a2236;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    width: 250px;
+}
+.sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+}
+.sidebar a:hover {
+    background-color: #2a2f45;
+}
+.sidebar .active {
+    background-color: #2a2f45;
+}
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.status-active {
+    color: #00c853;
+}
+.status-disabled {
+    color: #d32f2f;
+}
+.btn-primary {
+    background-color: #1a73e8;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #155ab6;
+}
+.btn-secondary {
+    background-color: #2a2f45;
+    border: none;
+}
+.btn-secondary:hover {
+    background-color: #1a2236;
+}
+table {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+/* Style untuk tabel */
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+/* Mengatur header tabel */
+th {
+    background-color: #232f4d;
+    color: #fafbfc;
+    font-weight: bold;
+}
+
+/* Warna latar belakang baris ganjil dan genap */
+tbody tr:nth-child(odd) {
+    background-color: #565d7b;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #2a2f45;
+}
+
+/* Efek hover untuk baris tabel */
+tbody tr:hover {
+    background-color: #1a2236;
+}
+
