@@ -2,6 +2,11 @@ body {
     background-color: #1a2236;
     color: #ffffff;
     font-family: 'Arial', sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    
 }
 .sidebar {
     background-color: #1a2236;
@@ -23,8 +28,11 @@ body {
     background-color: #2a2f45;
 }
 .content {
+    flex: 1;
     margin-left: 250px;
     padding: 20px;
+    margin-bottom: auto;
+
 }
 
 .status-active {
@@ -94,7 +102,7 @@ tbody tr:hover {
 
 .modal-header {
     padding: 20px;
-    ackground-color: #2a2f45;/* Ganti dengan warna tema Anda */
+    background-color: #2a2f45;/* Ganti dengan warna tema Anda */
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
@@ -109,7 +117,7 @@ tbody tr:hover {
 .modal-footer {
     padding: 15px;
     text-align: right;
-    ackground-color: #232f4d;
+    background-color: #232f4d;
 }
 
 .form-check-label {
@@ -126,5 +134,16 @@ tbody tr:hover {
         max-width: 100%;
     }
 }
-
+footer{
+    background-color: #232f4d;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    margin-top: 0; /* Memastikan footer berada di bawah */
+    padding-left: 20px;  /* Memberikan jarak dari sisi kiri */
+    padding-right: 20px; /* Memberikan jarak dari sisi kanan */
+    margin-bottom: 0;
+}
 

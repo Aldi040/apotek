@@ -1,39 +1,49 @@
 <?php
-    include "assets/header.php";
-    include "assets/sidebar.php";
-    include "assets/main.php";
+include "assets/header.php";
+include "assets/sidebar.php";
+include "assets/main.php";
 
-    // Tangkap parameter filter
-    $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
-    $filterCategory = isset($_GET['filterCategory']) ? $_GET['filterCategory'] : [];
-    $filterStatus = isset($_GET['filterStatus']) ? mysqli_real_escape_string($conn, $_GET['filterStatus']) : '';
+// Tangkap parameter filter
+$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+$filterCategory = isset($_GET['filterCategory']) ? $_GET['filterCategory'] : [];
+$filterStatus = isset($_GET['filterStatus']) ? mysqli_real_escape_string($conn, $_GET['filterStatus']) : '';
+$minPrice = isset($_GET['minPrice']) ? floatval($_GET['minPrice']) : 0;
+$maxPrice = isset($_GET['maxPrice']) ? floatval($_GET['maxPrice']) : 0;
 
-    // Query untuk mengambil kategori obat dari database
-    $categoryQuery = "SELECT DISTINCT KATREGORI FROM OBAT";
-    $categoryResult = mysqli_query($conn, $categoryQuery);
+// Query untuk mengambil kategori obat dari database
+$categoryQuery = "SELECT DISTINCT KATREGORI FROM OBAT";
+$categoryResult = mysqli_query($conn, $categoryQuery);
 
-    // Query obat dengan pencarian dan filter
-    $obat = "SELECT * FROM OBAT WHERE (NAMA_OBAT LIKE '%$search%' OR KATREGORI LIKE '%$search%')";
+// Query obat dengan pencarian dan filter
+$obat = "SELECT * FROM OBAT WHERE (NAMA_OBAT LIKE '%$search%' OR KATREGORI LIKE '%$search%')";
 
-    // Tambahkan filter kategori jika ada
-    if (!empty($filterCategory)) {
-        $obat .= " AND KATREGORI IN ('" . implode("','", $filterCategory) . "')";
-    }
+// Tambahkan filter kategori jika ada
+if (!empty($filterCategory)) {
+    $obat .= " AND KATREGORI IN ('" . implode("','", $filterCategory) . "')";
+}
 
-    // Tambahkan filter status jika ada
-    if ($filterStatus === 'available') {
-        $obat .= " AND JUMLAH_STOCK > 0";
-    } elseif ($filterStatus === 'out_of_stock') {
-        $obat .= " AND JUMLAH_STOCK = 0";
-    }
+// Tambahkan filter status jika ada
+if ($filterStatus === 'available') {
+    $obat .= " AND JUMLAH_STOCK > 0";
+} elseif ($filterStatus === 'out_of_stock') {
+    $obat .= " AND JUMLAH_STOCK = 0";
+}
 
-    $result = mysqli_query($conn, $obat);
+// Tambahkan filter range harga jika ada
+if ($minPrice > 0) {
+    $obat .= " AND HARGA >= $minPrice";
+}
+if ($maxPrice > 0) {
+    $obat .= " AND HARGA <= $maxPrice";
+}
+
+$result = mysqli_query($conn, $obat);
 ?>
 
 <h1>Tabel Obat</h1>
 <div class="mb-4 d-flex justify-content-between align-items-center">
     <div>
-        <button class="btn btn-primary me-2" onclick="window.location.href='add_product.php'">
+        <button class="btn btn-primary me-2" onclick="window.location.href='tambah_obat.php'">
             tambah obat
         </button>
         <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterModal">
@@ -62,6 +72,7 @@
             <th>Expiry Date</th>
             <th>Stock</th>
             <th>Harga</th>
+            <th>Keterangan</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -71,14 +82,15 @@
                 <tr>
                     <td><?php echo htmlspecialchars($row['NAMA_OBAT']); ?></td>
                     <td><?php echo htmlspecialchars($row['KATREGORI']); ?></td>
-                    <td><?php echo ($row['JUMLAH_STOCK'] > 0) ? 'Available' : 'Out of Stock'; ?></td>
+                    <td><?php echo ($row['JUMLAH_STOCK'] > 0) ? 'Available' : 'stock habis'; ?></td>
                     <td><?php echo htmlspecialchars($row['EXP']); ?></td>
                     <td><?php echo htmlspecialchars($row['JUMLAH_STOCK']); ?></td>
-                    <td>Rp. <?php echo number_format($row['HARGA'], 2); ?></td>
+                    <td>Rp. <?php echo number_format($row['HARGA'], 2 , '.', '.'); ?></td>
+                    <td><?php echo htmlspecialchars($row['KETERANGAN']); ?></td>
                     <td>
                         <div class="d-flex gap-1 justify-content-center">
-                            <a href="edit_product.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="delete_product.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                            <a href="edit_obat.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-warning btn-sm fw-bold">Edit</a>
+                            <a href="delete_product.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-danger btn-sm fw-bold" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -125,6 +137,23 @@
                             <option value="out_of_stock" <?php if ($filterStatus === 'out_of_stock') echo 'selected'; ?>>Out of Stock</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="filterPrice" class="form-label">Range Harga</label>
+                        <div class="d-flex gap-2">
+                            <input 
+                                type="number" 
+                                class="form-control" 
+                                name="minPrice" 
+                                placeholder="Harga Min" 
+                                value="<?php echo isset($_GET['minPrice']) ? htmlspecialchars($_GET['minPrice']) : ''; ?>" />
+                            <input 
+                                type="number" 
+                                class="form-control" 
+                                name="maxPrice" 
+                                placeholder="Harga Max" 
+                                value="<?php echo isset($_GET['maxPrice']) ? htmlspecialchars($_GET['maxPrice']) : ''; ?>" />
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -136,5 +165,5 @@
 </div>
 
 <?php
-    include "assets/footer.php";
+include "assets/footer.php";
 ?>
