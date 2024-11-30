@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<head>
+    <title>Obat</title>
+</head>
 <style>
     .card-body{
         background-color: #232f4d;
