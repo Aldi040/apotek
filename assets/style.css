@@ -94,7 +94,7 @@ tbody tr:hover {
 
 .modal-header {
     padding: 20px;
-    ackground-color: #2a2f45;/* Ganti dengan warna tema Anda */
+    Background-color: #2a2f45;/* Ganti dengan warna tema Anda */
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
@@ -109,7 +109,7 @@ tbody tr:hover {
 .modal-footer {
     padding: 15px;
     text-align: right;
-    ackground-color: #232f4d;
+    Background-color: #232f4d;
 }
 
 .form-check-label {
