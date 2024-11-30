@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
+<head>
+    <title>Obat</title>
+</head>
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow-lg" style="width: 500px;">
         <div class="card-header bg-primary text-white text-center">
