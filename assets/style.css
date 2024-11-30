@@ -102,6 +102,7 @@ tbody tr:hover {
 
 .modal-header {
     padding: 20px;
+    Background-color: #2a2f45;/* Ganti dengan warna tema Anda */
     background-color: #2a2f45;/* Ganti dengan warna tema Anda */
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -117,6 +118,7 @@ tbody tr:hover {
 .modal-footer {
     padding: 15px;
     text-align: right;
+    Background-color: #232f4d;
     background-color: #232f4d;
 }
 

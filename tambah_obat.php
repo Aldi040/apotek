@@ -27,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
+<style>
+    .card-body{
+        background-color: #232f4d;
+    }
+</style>
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow-lg" style="width: 500px;">
         <div class="card-header bg-primary text-white text-center">
