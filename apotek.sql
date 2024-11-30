@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2024 at 02:09 PM
+-- Generation Time: Nov 30, 2024 at 06:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `obat` (
   `ID_OBAT` int(11) NOT NULL,
   `NAMA_OBAT` varchar(50) NOT NULL,
   `KATREGORI` varchar(100) DEFAULT NULL,
+  `KETERANGAN` varchar(10000) NOT NULL,
   `JUMLAH_STOCK` int(11) NOT NULL DEFAULT 0,
   `HARGA` decimal(10,2) NOT NULL,
   `EXP` date DEFAULT NULL,
@@ -41,9 +42,9 @@ CREATE TABLE `obat` (
 -- Dumping data for table `obat`
 --
 
-INSERT INTO `obat` (`ID_OBAT`, `NAMA_OBAT`, `KATREGORI`, `JUMLAH_STOCK`, `HARGA`, `EXP`, `ID_SUPPLIER`) VALUES
-(1, 'Paracetamol', 'Painkiller', 100, 5000.00, '2025-12-31', 1),
-(2, 'Aspirin', 'Painkiller', 50, 3000.00, '2024-12-31', 2);
+INSERT INTO `obat` (`ID_OBAT`, `NAMA_OBAT`, `KATREGORI`, `KETERANGAN`, `JUMLAH_STOCK`, `HARGA`, `EXP`, `ID_SUPPLIER`) VALUES
+(1, 'Paracetamol', 'Painkiller', '', 100, 5000.00, '2025-12-31', 1),
+(2, 'Aspirin', 'Painkiller', '', 50, 3000.00, '2024-12-31', 2);
 
 -- --------------------------------------------------------
 
@@ -53,17 +54,40 @@ INSERT INTO `obat` (`ID_OBAT`, `NAMA_OBAT`, `KATREGORI`, `JUMLAH_STOCK`, `HARGA`
 
 CREATE TABLE `pelanggan` (
   `ID_PELANGGAN` int(11) NOT NULL,
-  `NAMA_PELANGGAN` varchar(60) NOT NULL
+  `NAMA_PELANGGAN` varchar(60) NOT NULL,
+  `JENIS_KELAMIN` enum('Laki-Laki','Perempuan') NOT NULL,
+  `ALAMAT` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pelanggan`
 --
 
-INSERT INTO `pelanggan` (`ID_PELANGGAN`, `NAMA_PELANGGAN`) VALUES
-(1, 'John Doe'),
-(2, 'Jane Smith'),
-(3, 'Budi Santoso');
+INSERT INTO `pelanggan` (`ID_PELANGGAN`, `NAMA_PELANGGAN`, `JENIS_KELAMIN`, `ALAMAT`) VALUES
+(1, 'John Doe', 'Laki-Laki', ''),
+(2, 'Jane Smith', 'Laki-Laki', ''),
+(3, 'Budi Santoso', 'Laki-Laki', ''),
+(4, 'fathan', 'Laki-Laki', 'Indonesia 1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembelian_obat`
+--
+
+CREATE TABLE `pembelian_obat` (
+  `ID_PELANGGAN` int(11) NOT NULL,
+  `ID_OBAT` int(11) NOT NULL,
+  `QTY` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pembelian_obat`
+--
+
+INSERT INTO `pembelian_obat` (`ID_PELANGGAN`, `ID_OBAT`, `QTY`) VALUES
+(4, 1, 1),
+(4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -129,6 +153,13 @@ ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`ID_PELANGGAN`);
 
 --
+-- Indexes for table `pembelian_obat`
+--
+ALTER TABLE `pembelian_obat`
+  ADD KEY `ID_OBAT` (`ID_OBAT`),
+  ADD KEY `ID_PELANGGAN` (`ID_PELANGGAN`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -155,7 +186,7 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `ID_PELANGGAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_PELANGGAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -178,6 +209,13 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `obat`
   ADD CONSTRAINT `obat_ibfk_1` FOREIGN KEY (`ID_SUPPLIER`) REFERENCES `supplier` (`ID_SUPPLIER`);
+
+--
+-- Constraints for table `pembelian_obat`
+--
+ALTER TABLE `pembelian_obat`
+  ADD CONSTRAINT `pembelian_obat_ibfk_1` FOREIGN KEY (`ID_OBAT`) REFERENCES `obat` (`ID_OBAT`),
+  ADD CONSTRAINT `pembelian_obat_ibfk_2` FOREIGN KEY (`ID_PELANGGAN`) REFERENCES `pelanggan` (`ID_PELANGGAN`);
 
 --
 -- Constraints for table `transaksi`

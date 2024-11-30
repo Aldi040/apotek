@@ -5,7 +5,12 @@
      Logo
     </span>
    </div>
-   <a class="active" href="obat.php">
+   <a href="dashboard.php">
+    <i class="fas fa-pills me-2">
+    </i>
+    dashboard
+   </a>
+   <a href="obat.php">
     <i class="fas fa-pills me-2">
     </i>
     Obat
