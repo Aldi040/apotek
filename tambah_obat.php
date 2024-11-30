@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="index.php" class="btn btn-secondary">Kembali</a>
+                    <a href="obat.php" class="btn btn-secondary">Kembali</a>
                 </div>
             </form>
         </div>
