@@ -43,7 +43,6 @@
                 <th>ID Transaksi</th>
                 <th>Nama Pelanggan</th>
                 <th>Tanggal Transaksi</th>
-                <th>Jumlah Transaksi</th>
                 <th>Total Harga</th>
                 <th>Metode Pembayaran</th>
                 <th>Action</th>
@@ -55,7 +54,6 @@
                 <td><?= $value['ID_TRANSAKSI'] ?></td>
                 <td><?= $value['NAMA_PELANGGAN'] ?></td>
                 <td><?= $value['TANGGAL_TRANSAKSI'] ?></td>
-                <td><?= $value['JUMLAH_TRANSAKSI'] ?></td>
                 <td><?= "Rp. ". number_format($value['TOTAL_HARGA'], 2, ".", ".") ?></td>
                 <td><?= $value['METODE_PEMBAYARAN'] ?></td>
                 <td>
