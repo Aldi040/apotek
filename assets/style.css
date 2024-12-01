@@ -195,3 +195,11 @@ footer{
     text-align: center;
     box-shadow: 2px 2px 2px white;
 }
+
+.total{
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-top: 1px solid gray;
+}
