@@ -1,8 +1,8 @@
 <div class="sidebar">
    <div class="d-flex align-items-center mb-4">
-    <img alt="Logo" class="me-2" height="40" src="https://storage.googleapis.com/a1aa/image/SZlNYNFuFdbgE5O1f1Go1yUlqjDcVf13m12eNaV7uBKG3tpnA.jpg" width="40"/>
-    <span>
-     Logo
+    <i class="fas fa-clinic-medical me-2" style="font-size: 2.5rem; color: #4CAF50;"></i>
+    <span class="fs-4 fw-bold">
+     Apotek
     </span>
    </div>
    <a href="dashboard.php">
