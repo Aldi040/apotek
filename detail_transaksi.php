@@ -55,7 +55,7 @@
                 // insert ketika pelanggan masih belum melakukan transaksi
                 $insert_pelanggan = mysqli_query($conn, "INSERT INTO pelanggan (NAMA_PELANGGAN, JENIS_KELAMIN, ALAMAT) VALUES ('$nama', '$gender', '$alamat')");
 
-                $query_pelanggan2 = mysqli_query($conn, "SELECT ID_PELANGGAN FROM pelanggan WHERE NAMA_PELANGGAN='$nama'");
+                $query_pelanggan2 = mysqli_query($conn, query: "SELECT ID_PELANGGAN FROM pelanggan WHERE NAMA_PELANGGAN='$nama'");
                 $result_pelanggan2 = mysqli_fetch_assoc($query_pelanggan2);
 
                 $id = $result_pelanggan2['ID_PELANGGAN'];
