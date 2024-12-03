@@ -4,6 +4,19 @@
     include "assets/main.php";
     $query= mysqli_query($conn, "SELECT * FROM transaksi, pelanggan WHERE transaksi.ID_PELANGGAN = pelanggan.ID_PELANGGAN");
     $result = mysqli_fetch_all($query, MYSQLI_ASSOC);
+    $hasil = true;
+
+    if(isset($_POST['search'])){
+        $hasil = "ada";
+        $search = $_POST['sc_nama'];
+        $query_pelanggan= mysqli_query($conn, "SELECT * FROM transaksi JOIN pelanggan ON transaksi.ID_PELANGGAN = pelanggan.ID_PELANGGAN WHERE pelanggan.NAMA_PELANGGAN LIKE '$search%'");
+        $result = mysqli_fetch_all($query_pelanggan, MYSQLI_ASSOC);
+        if(empty($result)){
+            $hasil = false;
+        }else{
+            $hasil = true;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -28,10 +41,10 @@
         <div class="d-flex gap-2">
             
                 <div>
-                    <input type="text" class="form-control" placeholder="Cari Nama Pelanggan...">
+                    <input type="text" class="form-control" placeholder="Cari Nama Pelanggan..." name="sc_nama">
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary" name="search">Search</button>
                 </div>
 
         </div>
@@ -49,45 +62,31 @@
             </tr>
         </thead>
         <tbody>
-        <?php $count = 1; ?>
-        <?php foreach($result as $value): ?>
-            <tr>
-                <td><?= $count; ?></td>
-                <td><?= $value['NAMA_PELANGGAN'] ?></td>
-                <td><?= $value['TANGGAL_TRANSAKSI'] ?></td>
-                <td><?= "Rp. ". number_format($value['TOTAL_HARGA'], 2, ".", ".") ?></td>
-                <td><?= $value['METODE_PEMBAYARAN'] ?></td>
-                <td>
-                    <div class="d-flex gap-1 justify-content-center">
-                        <a href="" class="btn btn-success"><i class="fa-solid fa-eye"></i></a>
-                        <a href="edit_product.php?id=<?= $value['ID_TRANSAKSI']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="delete_product.php?id=<?= $value['ID_TRANSAKSI']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                    </div>
-                </td>
-            </tr>
-            <?php $count++; ?>
-        <?php endforeach; ?>
+        <?php if($hasil == true): ?>
+            <?php $count = 1; ?>
+            <?php foreach($result as $value): ?>
+                <tr>
+                    <td><?= $count; ?></td>
+                    <td><?= $value['NAMA_PELANGGAN'] ?></td>
+                    <td><?= $value['TANGGAL_TRANSAKSI'] ?></td>
+                    <td><?= "Rp. ". number_format($value['TOTAL_HARGA'], 2, ".", ".") ?></td>
+                    <td><?= $value['METODE_PEMBAYARAN'] ?></td>
+                    <td>
+                        <div class="d-flex gap-1 justify-content-center">
+                            <a href="lihat_detail_transaksi.php?id=<?= htmlspecialchars($value['ID_TRANSAKSI']);?>&id_pelanggan=<?= htmlspecialchars($value['ID_PELANGGAN']);?>&nama_pelanggan=<?= htmlspecialchars($value['NAMA_PELANGGAN']);?>" class="btn btn-success"><i class="fa-solid fa-eye" ></i></a>
+                            <a href="delete_product.php?id=<?= $value['ID_TRANSAKSI']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <?php $count++; ?>
+                <?php endforeach; ?>
+            <?php else:  ?>
+                <tr>
+                    <td colspan="6">No Matching Data</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
-
-
-<div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 </html>
 <?php

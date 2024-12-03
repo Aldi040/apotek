@@ -131,7 +131,7 @@
             <div class="card-body p-3">
                 <div>
                     <label for="">Jenis Obat</label>
-                    <select name="obat" id="" class="form-control">
+                    <select name="obat" id="" class="form-select">
                         <option value="none">~Pilih Obat~</option>
                         <?php foreach($result_obat as $value): ?>
                             <option value="<?= $value['ID_OBAT']?>"><?= $value['NAMA_OBAT']?></option>
