@@ -1,19 +1,24 @@
 <?php 
+    session_start();
     include "assets/header.php";
     include "assets/sidebar.php";
     include "assets/main.php";
 
     $nama = $_GET['nama'];
     $gender = $_GET['gender'];
-    $alamat = $_GET['alamat'];
     $tanggal_transaksi = $_GET['transaksi'];
+    $id_transaksi = $_GET['id_transaksi'];
+    $status = $_GET['status'];
 
     $query_obat = mysqli_query($conn, "SELECT * FROM obat");
     $result_obat = mysqli_fetch_all($query_obat, MYSQLI_ASSOC);
 
     // simpan quatitas 
-    $_SESSION['qty'] = [];
+    if (!isset($_SESSION['obat'])) {
+        $_SESSION['obat'] = [];
+    }
 
+    var_dump($_SESSION['obat']);
     $eror_obat = '';
     $eror_qty = '';
     if(isset($_POST['tambah'])){
@@ -43,26 +48,35 @@
                 $result_pelanggan2 = mysqli_fetch_assoc($query_pelanggan2);
 
                 $id = $result_pelanggan2['ID_PELANGGAN'];
-                $insert_obat = mysqli_query($conn, "INSERT INTO pembelian_obat (ID_PELANGGAN, ID_OBAT, QTY) VALUES ('$id', '$id_obat', '$qty')");
-                $insert_transaksi = mysqli_query($conn, "UPDATE transaksi SET TOTAL_HARGA = TOTAL_HARGA + $total_harga");
-                if(in_array($id_obat, $_SESSION['qty'])){
-                    $_SESSION['qty'][$id_obat] += $qty;
+
+                $query_transaksi_new = mysqli_query($conn, "SELECT * FROM transaksi WHERE ID_TRANSAKSI = '$id_transaksi'");
+                $result_transaksi_new = mysqli_fetch_assoc($query_transaksi_new);
+                $transaksi_total = $result_transaksi_new['TOTAL_HARGA'];
+                if($transaksi_total == null){
+                    $insert_transaksi = mysqli_query($conn, "UPDATE transaksi SET TOTAL_HARGA = $total_harga WHERE ID_TRANSAKSI = '$id_transaksi'");
+                    $insert_obat = mysqli_query($conn, "INSERT INTO pembelian_obat (ID_PELANGGAN, ID_OBAT, QTY, ID_TRANSAKSI) VALUES ('$id', '$id_obat', '$qty', '$id_transaksi')");
                 }else{
-                    $_SESSION['qty'][$id_obat] = $qty;
+                    $insert_transaksi = mysqli_query($conn, "UPDATE transaksi SET TOTAL_HARGA = TOTAL_HARGA + $total_harga WHERE ID_TRANSAKSI = '$id_transaksi'");
+                    $insert_obat = mysqli_query($conn, "INSERT INTO pembelian_obat (ID_PELANGGAN, ID_OBAT, QTY, ID_TRANSAKSI) VALUES ('$id', '$id_obat', '$qty', '$id_transaksi')");
+                }
+                // $update_stok_obat = mysqli_query($conn, "UPDATE obat SET JUMLAH_STOCK = JUMLAH_STOCK - $qty WHERE ID_OBAT = '$id_obat'");
+                $found = false;
+                foreach ($_SESSION['obat'] as $key => $item) {
+                    if($_SESSION['obat'] !== null){
+                        if ($item['id_obat'] == $id_obat) {
+                            // Jika ID obat ditemukan, update jumlahnya
+                            $_SESSION['obat'][$key]['qty'] += $qty;
+                            $found = true;
+                            break;
+                        }
+                    }
+                }
+                
+                // Jika ID obat tidak ditemukan, tambahkan sebagai item baru
+                if (!$found) {
+                    $_SESSION['obat'][] = ['id_obat' => $id_obat, 'qty' => $qty];
                 }
 
-            }else{
-                // insert ketika pelanggan masih belum melakukan transaksi
-                $insert_pelanggan = mysqli_query($conn, "INSERT INTO pelanggan (NAMA_PELANGGAN, JENIS_KELAMIN, ALAMAT) VALUES ('$nama', '$gender', '$alamat')");
-
-                $query_pelanggan2 = mysqli_query($conn, query: "SELECT ID_PELANGGAN FROM pelanggan WHERE NAMA_PELANGGAN='$nama'");
-                $result_pelanggan2 = mysqli_fetch_assoc($query_pelanggan2);
-
-                $id = $result_pelanggan2['ID_PELANGGAN'];
-                $insert_obat = mysqli_query($conn, "INSERT INTO pembelian_obat (ID_PELANGGAN, ID_OBAT, QTY) VALUES ('$id', '$id_obat', '$qty')");
-                $insert_transaksi = mysqli_query($conn, "INSERT INTO transaksi (ID_PELANGGAN, TANGGAL_TRANSAKSI, TOTAL_HARGA) VALUES ('$id', '$tanggal_transaksi', '$total_harga')");
-
-                $_SESSION['qty'][$id_obat] = $qty;
             }
 
         // query ke tabel pelanggan
@@ -70,9 +84,25 @@
         $result_once_pelanggan = mysqli_fetch_assoc($query_once_pelanggan);
         $id_pelanggan = $result_once_pelanggan['ID_PELANGGAN'];
 
-        $multi_query = mysqli_query($conn, "SELECT * FROM pembelian_obat WHERE pembelian_obat.ID_PELANGGAN = '$id_pelanggan'");
+        $multi_query = mysqli_query($conn, "SELECT * FROM pembelian_obat WHERE ID_PELANGGAN = '$id_pelanggan' AND ID_TRANSAKSI = '$id_transaksi'");
         $result_query_multi = mysqli_fetch_all($multi_query, MYSQLI_ASSOC);
     }
+    }
+    if(isset($_POST['hapus'])){
+        $query_pelanggan2 = mysqli_query($conn, "SELECT ID_PELANGGAN FROM pelanggan WHERE NAMA_PELANGGAN='$nama'");
+        $result_pelanggan2 = mysqli_fetch_assoc($query_pelanggan2);
+        $id = $result_pelanggan2['ID_PELANGGAN'];
+        if($status == 'ada'){
+            $query_delete_transaksi = mysqli_query($conn, "DELETE FROM transaksi WHERE ID_PELANGGAN = '$id' AND ID_TRANSAKSI = '$id_transaksi'");
+        }else{
+            $query_delete_transaksi = mysqli_query($conn, "DELETE FROM transaksi WHERE ID_PELANGGAN = '$id' AND ID_TRANSAKSI = '$id_transaksi'");
+            $query_delete_pelanggan = mysqli_query($conn, "DELETE FROM pelanggan WHERE ID_PELANGGAN = '$id'");
+        }
+        session_unset();
+        session_destroy();
+        echo "<script>
+            window.location.href='transaksi.php';
+        </script>";
     }
 ?>
 
@@ -101,7 +131,7 @@
             <div class="card-body p-3">
                 <div>
                     <label for="">Jenis Obat</label>
-                    <select name="obat" id="" class="form-control">
+                    <select name="obat" id="" class="form-select">
                         <option value="none">~Pilih Obat~</option>
                         <?php foreach($result_obat as $value): ?>
                             <option value="<?= $value['ID_OBAT']?>"><?= $value['NAMA_OBAT']?></option>
@@ -119,9 +149,9 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-3 gap-2 mb-2">
-                <button class="btn btn-warning" onclick="window.location.href='form_transaksi_pelanggan.php?nama=<?= $nama ?>&gender=<?= $gender ?>&alamat=<?= $alamat ?>&transaksi=<?= $tanggal_transaksi ?>'" type="button"><i class="fa-solid fa-backward"></i></button>
-                <button class="btn btn-success">Simpan</button>
-                <button class="btn btn-danger" onclick="window.location.href='transaksi.php'" type="button"><i class="fa-solid fa-xmark"></i></button>
+                <button class="btn btn-warning" onclick="window.location.href='form_transaksi_pelanggan.php?nama=<?= $nama ?>&gender=<?= $gender ?>&transaksi=<?= $tanggal_transaksi ?>'" type="button"><i class="fa-solid fa-backward"></i></button>
+                <button class="btn btn-success"onclick="window.location.href='pembayaran.php?id_transaksi=<?=$id_transaksi?>&id_pelanggan=<?=$id_pelanggan?>&status=<?=$status?>'" type="button">Simpan</button>
+                <button class="btn btn-danger" name="hapus" type="submit"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
         <div class="list-container" style="width: 60%;">
@@ -148,7 +178,7 @@
             </div>
             <?php if(isset($_POST['tambah']) && $eror_obat == "" && $eror_qty == ""): ?>
                 <div class="d-flex justify-content-around total">
-                    <?php $query_transaksi = mysqli_query($conn, "SELECT TOTAL_HARGA FROM transaksi WHERE ID_PELANGGAN ='$id_pelanggan'");
+                    <?php $query_transaksi = mysqli_query($conn, "SELECT TOTAL_HARGA FROM transaksi WHERE ID_PELANGGAN ='$id_pelanggan' AND ID_TRANSAKSI = '$id_transaksi'");
                         $result_transaksi = mysqli_fetch_assoc($query_transaksi);
                      ?>
                      <span>Total yang harus dibayar:</span>

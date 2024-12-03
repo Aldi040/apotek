@@ -90,7 +90,7 @@ $result = mysqli_query($conn, $obat);
                     <td>
                         <div class="d-flex gap-1 justify-content-center">
                             <a href="edit_obat.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-warning btn-sm fw-bold">Edit</a>
-                            <a href="delete_product.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-danger btn-sm fw-bold" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                            <a href="delete_obat.php?id=<?php echo $row['ID_OBAT']; ?>" class="btn btn-danger btn-sm fw-bold" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
                         </div>
                     </td>
                 </tr>

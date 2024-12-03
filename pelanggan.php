@@ -33,7 +33,7 @@ if (isset($_GET['save'])) {
     } else {
         echo "<script>alert('Terjadi kesalahan saat memperbarui data!'); window.location.href='pelanggan.php';</script>";
     }
-}
+
 
 ?>
 <h1>Tabel Pelanggan</h1>
