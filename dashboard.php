@@ -157,19 +157,20 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
-    
-    <style>
+
+        <style>
         body {
             background-color: #1a2236;
             color: #fff;
@@ -221,10 +222,21 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
         }
 
         /* Custom Colors */
-        .icon-green { background-color: #28a745; }
-        .icon-orange { background-color: #ff9800; }
-        .icon-red { background-color: #dc3545; }
-        .icon-blue { background-color: #007bff; }
+        .icon-green {
+            background-color: #28a745;
+        }
+
+        .icon-orange {
+            background-color: #ff9800;
+        }
+
+        .icon-red {
+            background-color: #dc3545;
+        }
+
+        .icon-blue {
+            background-color: #007bff;
+        }
 
         /* Chart Section */
         .chart-container {
@@ -234,7 +246,8 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
             padding: 20px;
             margin-top: 20px;
             width: 100%;
-            height: 400px; /* Increased height */
+            height: 400px;
+            /* Increased height */
         }
 
         /* Table Section */
@@ -253,9 +266,21 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
             margin: 0 auto;
         }
 
-        .rank-1 { color: #FFD700; } /* Gold */
-        .rank-2 { color: #C0C0C0; } /* Silver */
-        .rank-3 { color: #CD7F32; } /* Bronze */
+        .rank-1 {
+            color: #FFD700;
+        }
+
+        /* Gold */
+        .rank-2 {
+            color: #C0C0C0;
+        }
+
+        /* Silver */
+        .rank-3 {
+            color: #CD7F32;
+        }
+
+        /* Bronze */
 
         .revenue-label {
             font-size: 1.1rem;
@@ -284,110 +309,111 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
             align-items: center;
             gap: 6px;
         }
+        </style>
+    </head>
 
-    </style>
-</head>
-<body>
-<h1>DASHBOARD</h1>
-    <div class="container mt-5">
-        <!-- Menu Cards -->
-         
-        <div class="row">
-            <div class="col-md-3">
-                <a href="obat.php" class="text-decoration-none">
-                    <div class="menu-card">
-                        <div class="menu-icon icon-green">
-                            <i class="bi bi-hospital"></i>
-                        </div>
-                        <div class="menu-content">
-                            <div class="menu-title">Obat</div>
-                            <div class="menu-subtitle">Info Stok</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="supplier.php" class="text-decoration-none">
-                    <div class="menu-card">
-                        <div class="menu-icon icon-orange">
-                            <i class="bi bi-person"></i>
-                        </div>
-                        <div class="menu-content">
-                            <div class="menu-title">Supplier</div>
-                            <div class="menu-subtitle">Data Vendor</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="pelanggan.php" class="text-decoration-none">
-                    <div class="menu-card">
-                        <div class="menu-icon icon-red">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <div class="menu-content">
-                            <div class="menu-title">Pelanggan</div>
-                            <div class="menu-subtitle">Info Member</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="transaksi.php" class="text-decoration-none">
-                    <div class="menu-card">
-                        <div class="menu-icon icon-blue">
-                            <i class="bi bi-cart"></i>
-                        </div>
-                        <div class="menu-content">
-                            <div class="menu-title">Transaksi</div>
-                            <div class="menu-subtitle">Laporan</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+    <body>
+        <h1>DASHBOARD</h1>
+        <div class="container mt-5">
+            <!-- Menu Cards -->
 
-        <!-- Revenue Information -->
-        <div class="row mt-4">
-            <!-- Daily Revenue -->
-            <div class="col-md-3">
-                <div class="menu-card">
-                    <div class="menu-icon icon-purple">
-                        <i class="bi bi-cash-stack"></i>
-                    </div>
-                    <div class="menu-content">
-                        <div class="revenue-label">
-                            <span>Pendapatan Hari Ini</span>
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="obat.php" class="text-decoration-none">
+                        <div class="menu-card">
+                            <div class="menu-icon icon-green">
+                                <i class="bi bi-hospital"></i>
+                            </div>
+                            <div class="menu-content">
+                                <div class="menu-title">Obat</div>
+                                <div class="menu-subtitle">Info Stok</div>
+                            </div>
                         </div>
-                        <div class="revenue-amount">
-                            <i class="bi bi-currency-dollar"></i>
-                            <span>Rp. <?php echo number_format($pendapatan_hari['total'] ?? 0, 0, ',', '.'); ?></span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="supplier.php" class="text-decoration-none">
+                        <div class="menu-card">
+                            <div class="menu-icon icon-orange">
+                                <i class="bi bi-person"></i>
+                            </div>
+                            <div class="menu-content">
+                                <div class="menu-title">Supplier</div>
+                                <div class="menu-subtitle">Data Vendor</div>
+                            </div>
                         </div>
-                        <div class="revenue-period">
-                            <i class="bi bi-clock"></i>
-                            <span><?php echo date('d M Y'); ?></span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="pelanggan.php" class="text-decoration-none">
+                        <div class="menu-card">
+                            <div class="menu-icon icon-red">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="menu-content">
+                                <div class="menu-title">Pelanggan</div>
+                                <div class="menu-subtitle">Info Member</div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="transaksi.php" class="text-decoration-none">
+                        <div class="menu-card">
+                            <div class="menu-icon icon-blue">
+                                <i class="bi bi-cart"></i>
+                            </div>
+                            <div class="menu-content">
+                                <div class="menu-title">Transaksi</div>
+                                <div class="menu-subtitle">Laporan</div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
 
-            <!-- Weekly Revenue -->
-            <div class="col-md-3">
-                <div class="menu-card">
-                    <div class="menu-icon icon-cyan">
-                        <i class="bi bi-graph-up-arrow"></i>
+            <!-- Revenue Information -->
+            <div class="row mt-4">
+                <!-- Daily Revenue -->
+                <div class="col-md-3">
+                    <div class="menu-card">
+                        <div class="menu-icon icon-purple">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="revenue-label">
+                                <span>Pendapatan Hari Ini</span>
+                            </div>
+                            <div class="revenue-amount">
+                                <i class="bi bi-currency-dollar"></i>
+                                <span>Rp.
+                                    <?php echo number_format($pendapatan_hari['total'] ?? 0, 0, ',', '.'); ?></span>
+                            </div>
+                            <div class="revenue-period">
+                                <i class="bi bi-clock"></i>
+                                <span><?php echo date('d M Y'); ?></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="menu-content">
-                        <div class="revenue-label">
-                            </i>Pendapatan Minggu Ini
+                </div>
+
+                <!-- Weekly Revenue -->
+                <div class="col-md-3">
+                    <div class="menu-card">
+                        <div class="menu-icon icon-cyan">
+                            <i class="bi bi-graph-up-arrow"></i>
                         </div>
-                        <div class="revenue-amount">
-                            <i class="bi bi-currency-dollar me-1"></i>
-                            Rp. <?php echo number_format($pendapatan_minggu['total'] ?? 0, 0, ',', '.'); ?>
-                        </div>
-                        <div class="revenue-period">
-                            <i class="bi bi-calendar3 me-1"></i>
-                            <?php 
+                        <div class="menu-content">
+                            <div class="revenue-label">
+                                </i>Pendapatan Minggu Ini
+                            </div>
+                            <div class="revenue-amount">
+                                <i class="bi bi-currency-dollar me-1"></i>
+                                Rp. <?php echo number_format($pendapatan_minggu['total'] ?? 0, 0, ',', '.'); ?>
+                            </div>
+                            <div class="revenue-period">
+                                <i class="bi bi-calendar3 me-1"></i>
+                                <?php 
                                 $currentDay = date('j');
                                 $currentWeek = 
                                     $currentDay <= 7 ? 1 : 
@@ -395,75 +421,75 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                                     ($currentDay <= 21 ? 3 : 4));
                                 echo "Minggu ke-" . $currentWeek . " " . date('F');
                             ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Revenue -->
+                <div class="col-md-3">
+                    <div class="menu-card">
+                        <div class="menu-icon icon-pink">
+                            <i class="bi bi-bar-chart-line"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="revenue-label">
+                                Pendapatan Bulan Ini
+                            </div>
+                            <div class="revenue-amount">
+                                <i class="bi bi-currency-dollar me-1"></i>
+                                Rp. <?php echo number_format($pendapatan_bulan['total'] ?? 0, 0, ',', '.'); ?>
+                            </div>
+                            <div class="revenue-period">
+                                <i class="bi bi-calendar3-event me-1"></i><?php echo date('F Y'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yearly Revenue -->
+                <div class="col-md-3">
+                    <div class="menu-card">
+                        <div class="menu-icon icon-gold">
+                            <i class="bi bi-pie-chart"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="revenue-label">
+                                <i class="bi bi-calendar-year me-2"></i>Pendapatan Tahun Ini
+                            </div>
+                            <div class="revenue-amount">
+                                <i class="bi bi-currency-dollar me-1"></i>
+                                Rp. <?php echo number_format($pendapatan_tahun['total'] ?? 0, 0, ',', '.'); ?>
+                            </div>
+                            <div class="revenue-period">
+                                <i class="bi bi-calendar4-range me-1"></i>Tahun <?php echo date('Y'); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Monthly Revenue -->
-            <div class="col-md-3">
-                <div class="menu-card">
-                    <div class="menu-icon icon-pink">
-                        <i class="bi bi-bar-chart-line"></i>
-                    </div>
-                    <div class="menu-content">
-                        <div class="revenue-label">
-                            Pendapatan Bulan Ini
-                        </div>
-                        <div class="revenue-amount">
-                            <i class="bi bi-currency-dollar me-1"></i>
-                            Rp. <?php echo number_format($pendapatan_bulan['total'] ?? 0, 0, ',', '.'); ?>
-                        </div>
-                        <div class="revenue-period">
-                            <i class="bi bi-calendar3-event me-1"></i><?php echo date('F Y'); ?>
-                        </div>
+            <!-- Chart Section -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <canvas id="mingguanChart"></canvas>
                     </div>
                 </div>
-            </div>
 
-            <!-- Yearly Revenue -->
-            <div class="col-md-3">
-                <div class="menu-card">
-                    <div class="menu-icon icon-gold">
-                        <i class="bi bi-pie-chart"></i>
-                    </div>
-                    <div class="menu-content">
-                        <div class="revenue-label">
-                            <i class="bi bi-calendar-year me-2"></i>Pendapatan Tahun Ini
-                        </div>
-                        <div class="revenue-amount">
-                            <i class="bi bi-currency-dollar me-1"></i>
-                            Rp. <?php echo number_format($pendapatan_tahun['total'] ?? 0, 0, ',', '.'); ?>
-                        </div>
-                        <div class="revenue-period">
-                            <i class="bi bi-calendar4-range me-1"></i>Tahun <?php echo date('Y'); ?>
-                        </div>
+                <!-- Chart Bulanan -->
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <canvas id="bulananChart"></canvas>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Chart Section -->
-        <div class="row">
-        <div class="col-md-4">
-                <div class="chart-container">
-                    <canvas id="mingguanChart"></canvas>
+                <!-- Chart Tahunan -->
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <canvas id="tahunanChart"></canvas>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Chart Bulanan -->
-            <div class="col-md-4">
-                <div class="chart-container">
-                    <canvas id="bulananChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Chart Tahunan -->
-            <div class="col-md-4">
-                <div class="chart-container">
-                    <canvas id="tahunanChart"></canvas>
-                </div>
-            </div>
             </div>
         </div>
 
@@ -474,34 +500,29 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                 <div class="table-container">
                     <h5>Top Obat</h5>
                     <table class="ranking-table">
+                        <thead>
+                            <tr>
+                            <th colspan="2" style="text-align: center;">Nama Obat</th>
+
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            <tr class="ranking-row-1">
-                                <td>
-                                    <div class="ranking-number rank-1">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                </td>
-                                <td>Paracetamol</td>
-                                <td>120</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="ranking-number rank-2">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                </td>
-                                <td>Amoxicillin</td>
-                                <td>85</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="ranking-number rank-3">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                </td>
-                                <td>Cetirizine</td>
-                                <td>65</td>
-                            </tr>
+                            <?php
+                    // Fetch top 3 medicines based on quantity
+                    $query_top_obat = "SELECT NAMA_OBAT, JUMLAH_STOCK FROM obat ORDER BY JUMLAH_STOCK DESC LIMIT 3";
+                    $result_top_obat = mysqli_query($conn, $query_top_obat);
+                    $rank = 1;
+
+                    while ($row = mysqli_fetch_assoc($result_top_obat)) {
+                        echo "<tr class='ranking-row-$rank'>";
+                        echo "<td><div class='ranking-number rank-$rank'><i class='fas fa-trophy'></i></div></td>";
+                        echo "<td>{$row['NAMA_OBAT']}</td>";
+                        echo "<td>{$row['JUMLAH_STOCK']}</td>";
+                        echo "</tr>";
+                        $rank++;
+                    }
+                    ?>
                         </tbody>
                     </table>
                 </div>
@@ -513,33 +534,21 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                     <h5>Top Supplier</h5>
                     <table>
                         <tbody>
-                            <tr class="ranking-row-1">
-                                <td>
-                                    <div class="ranking-number rank-1">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                </td>
-                                <td>PT. Sehat Farma</td>
-                                <td>Obat Herbal</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="ranking-number rank-2">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                </td>
-                                <td>CV. Apotek</td>
-                                <td>Obat Antibiotik</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="ranking-number rank-3">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                </td>
-                                <td>PT. Pharma Solusindo</td>
-                                <td>Vitamin</td>
-                            </tr>
+                            <?php
+                    // Fetch top 3 suppliers
+                    $query_top_supplier = "SELECT NAMA_SUPPLIER, KATREGORI FROM supplier JOIN obat ON supplier.ID_SUPPLIER = obat.ID_SUPPLIER GROUP BY NAMA_SUPPLIER ORDER BY COUNT(obat.ID_SUPPLIER) DESC LIMIT 3";
+                    $result_top_supplier = mysqli_query($conn, $query_top_supplier);
+                    $rank = 1;
+
+                    while ($row = mysqli_fetch_assoc($result_top_supplier)) {
+                        echo "<tr class='ranking-row-$rank'>";
+                        echo "<td><div class='ranking-number rank-$rank'><i class='fas fa-trophy'></i></div></td>";
+                        echo "<td>{$row['NAMA_SUPPLIER']}</td>";
+                       
+                        echo "</tr>";
+                        $rank++;
+                    }
+                    ?>
                         </tbody>
                     </table>
                 </div>
@@ -558,34 +567,32 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
-                            // Query database
-                            $query = "SELECT * FROM TRANSAKSI ORDER BY TANGGAL_TRANSAKSI DESC";
-                            $result = mysqli_query($conn, $query);
+                            <?php
+                    // Fetch latest transactions
+                    $query_transaksi = "SELECT TANGGAL_TRANSAKSI, TOTAL_HARGA FROM transaksi ORDER BY TANGGAL_TRANSAKSI DESC LIMIT 5";
+                    $result_transaksi = mysqli_query($conn, $query_transaksi);
+                    $count = 1;
 
-                            if ($result) {
-                                $count = 0;
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    if ($count >= 5) break;
-                                    echo "<tr>";
-                                    echo "<td>" . ($count + 1) . "</td>";
-                                    echo "<td>" . $row['TANGGAL_TRANSAKSI'] . "</td>";
-                                    echo "<td>Rp. " . number_format($row['TOTAL_HARGA'], 0, ',', '.') . "</td>";
-                                    echo "</tr>";
-                                    $count++;
-                                }
-                            }
-                        ?>
+                    while ($row = mysqli_fetch_assoc($result_transaksi)) {
+                        echo "<tr>";
+                        echo "<td>{$count}</td>";
+                        echo "<td>{$row['TANGGAL_TRANSAKSI']}</td>";
+                        echo "<td>Rp. " . number_format($row['TOTAL_HARGA'], 0, ',', '.') . "</td>";
+                        echo "</tr>";
+                        $count++;
+                    }
+                    ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap JS & Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+        </div>
+
+        <!-- Bootstrap JS & Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
         // Chart Mingguan
         var ctxMingguan = document.getElementById('mingguanChart').getContext('2d');
         var mingguanChart = new Chart(ctxMingguan, {
@@ -599,7 +606,7 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                         '#4CAF50', // Week 1 - Green
                         '#2196F3', // Week 2 - Blue
                         '#FFC107', // Week 3 - Yellow
-                        '#F44336'  // Week 4 - Red
+                        '#F44336' // Week 4 - Red
                     ],
                     borderColor: '#fff',
                     borderWidth: 2
@@ -640,7 +647,7 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                         '#A06CD5', // Purple
                         '#7DDF64', // Green
                         '#FF8C42', // Coral
-                        '#6C88C4'  // Blue Gray
+                        '#6C88C4' // Blue Gray
                     ],
                     borderColor: '#fff',
                     borderWidth: 2
@@ -678,7 +685,7 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                         '#FFCE56', // 2022 - Yellow
                         '#4BC0C0', // 2021 - Turquoise
                         '#9966FF', // Additional color if needed
-                        '#FF9F40'  // Additional color if needed
+                        '#FF9F40' // Additional color if needed
                     ],
                     borderColor: '#fff',
                     borderWidth: 2
@@ -700,8 +707,9 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                 }
             }
         });
-    </script>
-</body>
+        </script>
+    </body>
+
 </html>
 <?php
     include 'assets/footer.php';

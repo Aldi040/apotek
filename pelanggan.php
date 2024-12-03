@@ -18,9 +18,9 @@
         echo "<script>confirm('Data pelanggan berhasil dihapus!'); window.location.href='pelanggan.php';</script>";
     } 
 if (isset($_POST['save'])) {
-    $id_pelanggan = $_POST['id'];
+    $id_pelanggan = $_POST['ida'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
-    $query = "UPDATE PELANGGAN SET NAMA_PELANGGAN = '$nama_pelanggan' WHERE ID_PELANGGAN = '$id_pelanggan'";
+    $query = "UPDATE pelanggan SET NAMA_PELANGGAN = '$nama_pelanggan' WHERE ID_PELANGGAN = '$id_pelanggan'";
     $query_run = mysqli_query($conn, $query);
     echo "<script>alert('Data pelanggan berhasil diperbarui!'); window.location.href='pelanggan.php';</script>";
 }
