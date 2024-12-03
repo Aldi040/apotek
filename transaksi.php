@@ -20,7 +20,7 @@
     <div class="my-2 d-flex justify-content-between">
         <form action="">
         <div class="">
-            <button class="btn btn-primary" onclick="window.location.href='report_transaksi.php'">Reporting</button>
+            <button class="btn btn-primary" onclick="window.location.href='report_transaksi.php'" type="button">Reporting</button>
             <button class="btn btn-success" onclick="window.location.href='form_transaksi_pelanggan.php'" type="button">Tambah Transaksi</button>
         </form>
         </div>
@@ -40,7 +40,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID Transaksi</th>
+                <th>No</th>
                 <th>Nama Pelanggan</th>
                 <th>Tanggal Transaksi</th>
                 <th>Total Harga</th>
@@ -49,9 +49,10 @@
             </tr>
         </thead>
         <tbody>
+        <?php $count = 1; ?>
         <?php foreach($result as $value): ?>
             <tr>
-                <td><?= $value['ID_TRANSAKSI'] ?></td>
+                <td><?= $count; ?></td>
                 <td><?= $value['NAMA_PELANGGAN'] ?></td>
                 <td><?= $value['TANGGAL_TRANSAKSI'] ?></td>
                 <td><?= "Rp. ". number_format($value['TOTAL_HARGA'], 2, ".", ".") ?></td>
@@ -64,6 +65,7 @@
                     </div>
                 </td>
             </tr>
+            <?php $count++; ?>
         <?php endforeach; ?>
         </tbody>
     </table>

@@ -27,7 +27,8 @@ if (isset($_POST['tambah'])) {
     // Validasi
     if (empty($nama)) {
         $eror_name = "Nama harus diisi!";
-    } elseif (!preg_match($regex_nama, $nama)) {
+    }
+    if (!preg_match($regex_nama, $nama)) {
         $eror_name = "Nama harus berupa huruf!";
     }
 
@@ -35,18 +36,45 @@ if (isset($_POST['tambah'])) {
         $eror_gender = "Jenis kelamin harus diisi!";
     }
 
-    if (empty($alamat)) {
-        $eror_alamat = "Alamat harus diisi!";
-    }
-
     if (empty($tanggal)) {
         $eror_tanggal = "Tanggal harus diisi!";
     }
-
     if ($eror_name == "" && $eror_gender == "" && $eror_alamat == "" && $eror_tanggal == "") {
-        echo "<script>
-                window.location.href='detail_transaksi.php?nama=$nama&gender=$gender&alamat=$alamat&transaksi=$tanggal';
+
+        $query_pelanggan = mysqli_query($conn, "SELECT * FROM pelanggan WHERE NAMA_PELANGGAN = '$nama'");
+        $result_pelanggan = mysqli_fetch_assoc($query_pelanggan);
+
+        if(mysqli_num_rows($query_pelanggan) > 0){
+            $id_pelanggan = $result_pelanggan['ID_PELANGGAN'];
+            $query_insert_transaksi = mysqli_query($conn, "INSERT INTO transaksi (ID_PELANGGAN, TANGGAL_TRANSAKSI) VALUES ('$id_pelanggan', '$tanggal')");
+
+            $query_transaksi_new = mysqli_query($conn, "SELECT MAX(ID_TRANSAKSI) AS ID_TRANSAKSI FROM transaksi");
+            $result_transaksi_new = mysqli_fetch_assoc($query_transaksi_new);
+            $id_transaksi = $result_transaksi_new['ID_TRANSAKSI'];
+
+            echo "<script>
+            window.location.href='detail_transaksi.php?nama=$nama&gender=$gender&transaksi=$tanggal&id_transaksi=$id_transaksi&status=ada';
             </script>";
+
+        }else{
+            $query_insert_pelanggan = mysqli_query($conn, "INSERT INTO pelanggan (NAMA_PELANGGAN, JENIS_KELAMIN) VALUES ('$nama', '$gender')");
+
+            // query ke tabel pelanggan 
+            $query_pelanggan_new = mysqli_query($conn, "SELECT * FROM pelanggan WHERE NAMA_PELANGGAN = '$nama'");
+            $result_query_pelanggan_new = mysqli_fetch_assoc($query_pelanggan_new);
+            $id_pelanggan_new = $result_query_pelanggan_new['ID_PELANGGAN'];
+
+            $query_insert_transaksi = mysqli_query($conn, "INSERT INTO transaksi (ID_PELANGGAN, TANGGAL_TRANSAKSI) VALUES ('$id_pelanggan_new', '$tanggal')");
+
+            $query_transaksi_new = mysqli_query($conn, "SELECT MAX(ID_TRANSAKSI) AS ID_TRANSAKSI FROM transaksi");
+            $result_transaksi_new = mysqli_fetch_assoc($query_transaksi_new);
+            $id_transaksi = $result_transaksi_new['ID_TRANSAKSI'];
+
+            echo "<script>
+                window.location.href='detail_transaksi.php?nama=$nama&gender=$gender&transaksi=$tanggal&id_transaksi=$id_transaksi&status=none';
+            </script>";
+
+        }
     }
 }
 
@@ -103,13 +131,6 @@ if (isset($_POST['tambah'])) {
                                 <input type="radio" value="Perempuan" name="gender" <?= $gender == "Perempuan" ? 'checked' : "" ?>> Perempuan
                                 <p id="eror_input" style="color: red;"><?= $eror_gender ?></p>
                             </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="background-color: #7D8ABC; color: white;">
-                        <div>
-                            <label for="address">Alamat</label>
-                            <input type="text" name="address" class="form-control" value="<?= htmlspecialchars($alamat) ?>">
-                            <p id="eror_input" style="color: red;"><?= $eror_alamat ?></p>
                         </div>
                     </li>
                     <li class="list-group-item" style="background-color: #7D8ABC; color: white;">

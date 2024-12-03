@@ -54,7 +54,10 @@
 <body>
     <h1>Laporan Penjualan </h1>
     <form action="" method="post">
-        <div style="width: 15%" class="d-flex gap-2 mt-5">
+        <div class="mt-5">
+            <button class="btn btn-primary" type="button" onclick="window.location.href='transaksi.php'">Kembali</button>
+        </div>
+        <div style="width: 15%" class="d-flex gap-2 mt-2">
             <input type="date" class="form-control" name="tanggal_awal">
             <p>-</p>
             <input type="date" class="form-control" name="tanggal_akhir">
