@@ -14,11 +14,11 @@
     $result_obat = mysqli_fetch_all($query_obat, MYSQLI_ASSOC);
 
     // simpan quatitas 
-    if (!isset($_SESSION['qty'])) {
-        $_SESSION['qty'] = [];
+    if (!isset($_SESSION['obat'])) {
+        $_SESSION['obat'] = [];
     }
 
-    var_dump($_SESSION['qty']);
+    var_dump($_SESSION['obat']);
     $eror_obat = '';
     $eror_qty = '';
     if(isset($_POST['tambah'])){
@@ -59,11 +59,22 @@
                     $insert_transaksi = mysqli_query($conn, "UPDATE transaksi SET TOTAL_HARGA = TOTAL_HARGA + $total_harga WHERE ID_TRANSAKSI = '$id_transaksi'");
                     $insert_obat = mysqli_query($conn, "INSERT INTO pembelian_obat (ID_PELANGGAN, ID_OBAT, QTY, ID_TRANSAKSI) VALUES ('$id', '$id_obat', '$qty', '$id_transaksi')");
                 }
-
-                if(array_key_exists($id_obat, $_SESSION['qty'])){
-                    $_SESSION['qty'][$id_obat] += $qty;
-                }else{
-                    $_SESSION['qty'][$id_obat] = $qty;
+                // $update_stok_obat = mysqli_query($conn, "UPDATE obat SET JUMLAH_STOCK = JUMLAH_STOCK - $qty WHERE ID_OBAT = '$id_obat'");
+                $found = false;
+                foreach ($_SESSION['obat'] as $key => $item) {
+                    if($_SESSION['obat'] !== null){
+                        if ($item['id_obat'] == $id_obat) {
+                            // Jika ID obat ditemukan, update jumlahnya
+                            $_SESSION['obat'][$key]['qty'] += $qty;
+                            $found = true;
+                            break;
+                        }
+                    }
+                }
+                
+                // Jika ID obat tidak ditemukan, tambahkan sebagai item baru
+                if (!$found) {
+                    $_SESSION['obat'][] = ['id_obat' => $id_obat, 'qty' => $qty];
                 }
 
             }
@@ -139,7 +150,7 @@
             </div>
             <div class="d-flex justify-content-center mt-3 gap-2 mb-2">
                 <button class="btn btn-warning" onclick="window.location.href='form_transaksi_pelanggan.php?nama=<?= $nama ?>&gender=<?= $gender ?>&transaksi=<?= $tanggal_transaksi ?>'" type="button"><i class="fa-solid fa-backward"></i></button>
-                <button class="btn btn-success">Simpan</button>
+                <button class="btn btn-success"onclick="window.location.href='pembayaran.php?id_transaksi=<?=$id_transaksi?>&id_pelanggan=<?=$id_pelanggan?>&status=<?=$status?>'" type="button">Simpan</button>
                 <button class="btn btn-danger" name="hapus" type="submit"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
