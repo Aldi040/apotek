@@ -5,7 +5,7 @@
     $search = '';
     if (isset($_GET['search'])) {
         $search = $_GET['search'];
-        $query = "SELECT * FROM PELANGGAN where NAMA_PELANGGAN LIKE '%$search%' ORDER BY NAMA_PELANGGAN ASC";
+        $query = "SELECT * FROM PELANGGAN where NAMA_PELANGGAN LIKE '%$search%' ORDER BY NAMA_PELANGGAN ASC ";
         $result = mysqli_query($conn, $query);
     }else{
         $query = "SELECT * FROM PELANGGAN";
@@ -27,13 +27,32 @@ if (isset($_POST['save'])) {
 ?>
 <h1>Tabel Pelanggan</h1>
 <div class="mb-4 d-flex justify-content-between align-items-center">
-    <form method="GET" class="d-flex">
+<form method="GET" class="d-flex">
         <input 
             class="form-control w-100 me-2" 
             placeholder="cari nama pelanggan" 
             type="text" 
             name="search" 
+            id="search"
             value="<?php echo htmlspecialchars($search); ?>" />
+            <script>
+                $(document).ready(function() {
+                    $("#search").autocomplete({
+                        source: function(request, response) {
+                            $.ajax({
+                            url: "search_pelanggan.php",
+                            type: "GET",
+                            data: { term: request.term },
+                            dataType: "json",
+                            success: function(data) {
+                                response(data);
+                                        }
+                                    });
+                                },
+                                minLength: 2
+                            });
+                        });
+        </script>
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>
@@ -48,10 +67,10 @@ foreach ($result as $row) {
     $id_pelanggan = isset($_GET['ida']) ? $_GET['ida'] : null; ?>
     <tr>
         <td><?= $row['ID_PELANGGAN']; ?></td>
-        <?php if ($id_pelanggan == $row['ID_PELANGGAN']) { ?>
+        <?php $rows=0; if ($id_pelanggan == $row['ID_PELANGGAN']) { ?>
             <form method="POST" action="pelanggan.php">
                 <td>
-                    <input type="hidden" name="id" value="<?= $row['ID_PELANGGAN']; ?>">
+                    <input type="hidden" name="id" value="<?= $rows++ ?>">
                     <input type="text" name="nama_pelanggan" value="<?= htmlspecialchars($row['NAMA_PELANGGAN']); ?>" required>
                 </td>
                 <td>

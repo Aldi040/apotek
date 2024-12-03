@@ -149,3 +149,57 @@ footer{
     margin-bottom: 0;
 }
 
+#eror_input{
+    color: #A02334;
+}
+
+.list-container{
+    border: 1px solid gray;
+    padding: 15px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-obat{
+    border-bottom: 1px solid gray;
+}
+
+.daftar-obat{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.obat{
+    display: flex;
+    justify-content: space-around;
+    background-color: #B3C8CF;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.qty{
+    display:block;
+}
+
+
+.main{
+    margin-top: 10%;
+}
+
+.hero{
+    background-color: #89A8B2;
+    padding: 10px;
+    border-radius: 100px;
+    text-align: center;
+    box-shadow: 2px 2px 2px white;
+}
+
+.total{
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-top: 1px solid gray;
+}

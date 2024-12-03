@@ -2,7 +2,6 @@
     include "assets/header.php";
     include "assets/sidebar.php";
     include "assets/main.php";
-
     $query= mysqli_query($conn, "SELECT * FROM transaksi, pelanggan WHERE transaksi.ID_PELANGGAN = pelanggan.ID_PELANGGAN");
     $result = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
@@ -19,8 +18,11 @@
         <h1>Tabel Transaksi</h1>
     </div>
     <div class="my-2 d-flex justify-content-between">
-        <div>
+        <form action="">
+        <div class="">
             <button class="btn btn-primary" onclick="window.location.href='report_transaksi.php'">Reporting</button>
+            <button class="btn btn-success" onclick="window.location.href='form_transaksi_pelanggan.php'" type="button">Tambah Transaksi</button>
+        </form>
         </div>
         <form action="" method="post">
         <div class="d-flex gap-2">
@@ -41,7 +43,6 @@
                 <th>ID Transaksi</th>
                 <th>Nama Pelanggan</th>
                 <th>Tanggal Transaksi</th>
-                <th>Jumlah Transaksi</th>
                 <th>Total Harga</th>
                 <th>Metode Pembayaran</th>
                 <th>Action</th>
@@ -53,7 +54,6 @@
                 <td><?= $value['ID_TRANSAKSI'] ?></td>
                 <td><?= $value['NAMA_PELANGGAN'] ?></td>
                 <td><?= $value['TANGGAL_TRANSAKSI'] ?></td>
-                <td><?= $value['JUMLAH_TRANSAKSI'] ?></td>
                 <td><?= "Rp. ". number_format($value['TOTAL_HARGA'], 2, ".", ".") ?></td>
                 <td><?= $value['METODE_PEMBAYARAN'] ?></td>
                 <td>
