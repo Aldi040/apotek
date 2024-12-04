@@ -13,7 +13,9 @@
     }
     if (isset($_GET['id'])) {
         $id_pelanggan = $_GET['id'];
+        $query2= "DELETE FROM transaksi WHERE ID_PELANGGAN = $id_pelanggan";
         $query = "DELETE FROM PELANGGAN WHERE ID_PELANGGAN = $id_pelanggan";
+        $result2 = mysqli_query($conn, $query2);
         $result = mysqli_query($conn, $query);
         echo "<script>confirm('Data pelanggan berhasil dihapus!'); window.location.href='pelanggan.php';</script>";
     } 
