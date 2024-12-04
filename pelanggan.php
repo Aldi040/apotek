@@ -9,9 +9,10 @@ if (isset($_GET['search'])) {
     $query = "SELECT * FROM PELANGGAN WHERE NAMA_PELANGGAN LIKE '%$search%' ORDER BY NAMA_PELANGGAN ASC";
     $result = mysqli_query($conn, $query);
 } else {
-    $query = "SELECT * FROM PELANGGAN";
+    $query = "SELECT * FROM PELANGGAN ORDER BY NAMA_PELANGGAN ASC";
     $result = mysqli_query($conn, $query);
 }
+
 
 if (isset($_GET['id'])) {
     $id_pelanggan = (int) $_GET['id']; // Pastikan ID adalah angka
@@ -23,7 +24,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-
 if (isset($_GET['save'])) {
     $id_pelanggan = (int) $_GET['ida']; // Pastikan ID adalah angka
     $nama_pelanggan = mysqli_real_escape_string($conn, $_GET['nama_pelanggan']);
@@ -33,40 +33,58 @@ if (isset($_GET['save'])) {
     } else {
         echo "<script>alert('Terjadi kesalahan saat memperbarui data!'); window.location.href='pelanggan.php';</script>";
     }
-
+}
 
 ?>
+
 <h1>Tabel Pelanggan</h1>
 <div class="mb-4 d-flex justify-content-between align-items-center">
     <form method="GET" class="d-flex">
         <input 
             class="form-control w-100 me-2" 
-            placeholder="cari nama pelanggan" 
+            placeholder="Cari nama pelanggan" 
             type="text" 
             name="search" 
             id="search"
             value="<?php echo htmlspecialchars($search); ?>" />
+        <script>
+            $(document).ready(function() {
+                $("#search").autocomplete({
+                    source: function(request, response) {
+                        $.ajax({
+                            url: "search_pelanggan.php",
+                            type: "GET",
+                            data: { term: request.term },
+                            dataType: "json",
+                            success: function(data) {
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 2
+                });
+            });
+        </script>
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>
-<table>
+<table border="1" cellpadding="10" cellspacing="0" style="width: 100%;">
     <tr>
         <th>ID Pelanggan</th>
         <th>Nama Pelanggan</th>
+        <th>Jenis Kelamin</th>
         <th>Aksi</th>
     </tr>
-    <?php 
-    $rows=1;
-    foreach ($result as $row) { 
-        $id_pelanggan = isset($_GET['ida']) ? $_GET['ida'] : null; ?>
+    <?php foreach ($result as $row): ?>
         <tr>
-            <td><?= $rows++; ?></td>
-            <?php if ($id_pelanggan == $row['ID_PELANGGAN']) { ?>
-                <form method="GET" action="pelanggan.php">
+            <td><?= htmlspecialchars($row['ID_PELANGGAN']); ?></td>
+            <?php if (isset($_GET['ida']) && $_GET['ida'] == $row['ID_PELANGGAN']): ?>
+                <form method="POST" action="pelanggan.php">
                     <td>
-                        <input type="hidden" name="ida" value="<?= htmlspecialchars($id_pelanggan); ?>">
+                        <input type="hidden" name="ida" value="<?= htmlspecialchars($row['ID_PELANGGAN']); ?>">
                         <input type="text" name="nama_pelanggan" value="<?= htmlspecialchars($row['NAMA_PELANGGAN']); ?>" required>
                     </td>
+                    <td><?= htmlspecialchars($row['JENIS_KELAMIN']); ?></td>
                     <td>
                         <div class="d-flex gap-1 justify-content-center">
                             <button type="submit" name="save" class="btn btn-success btn-sm">Save</button>
@@ -74,19 +92,19 @@ if (isset($_GET['save'])) {
                         </div>
                     </td>
                 </form>
-            <?php } else { ?>
+            <?php else: ?>
                 <td><?= htmlspecialchars($row['NAMA_PELANGGAN']); ?></td>
+                <td><?= htmlspecialchars($row['JENIS_KELAMIN']); ?></td>
                 <td>
                     <div class="d-flex gap-1 justify-content-center">
-                        <a href="pelanggan.php?ida=<?= htmlspecialchars($row['ID_PELANGGAN']); ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="pelanggan.php?id=<?= htmlspecialchars($row['ID_PELANGGAN']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                        <a href="pelanggan.php?ida=<?= $row['ID_PELANGGAN']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="pelanggan.php?id=<?= $row['ID_PELANGGAN']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
                     </div>
                 </td>
-            <?php } ?>
+            <?php endif; ?>
         </tr>
-    <?php } ?>
+    <?php endforeach; ?>
 </table>
-</div>
-<?php
+<?php  
 include "assets/footer.php";
 ?>

@@ -119,8 +119,10 @@ if (isset($_GET['edit'])) {
                 <td><?php echo $supplier['TELEPON_SUPPLIER']; ?></td>
                 <td><?php echo $supplier['EMAIL_SUPPLIER']; ?></td>
                 <td>
+                    <div class="d-flex gap-1" >
                     <a href="edit_supplier.php?edit=<?php echo $supplier['ID_SUPPLIER']; ?>" class="btn btn-warning btn-sm">Edit</a>
                     <a href="?hapus=<?php echo $supplier['ID_SUPPLIER']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>

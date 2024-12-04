@@ -17,8 +17,8 @@
     if (!isset($_SESSION['obat'])) {
         $_SESSION['obat'] = [];
     }
+    $id_pelanggan = "";
 
-    var_dump($_SESSION['obat']);
     $eror_obat = '';
     $eror_qty = '';
     if(isset($_POST['tambah'])){

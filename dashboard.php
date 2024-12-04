@@ -498,7 +498,7 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
             <!-- Top Obat Table -->
             <div class="col-md-4">
                 <div class="table-container">
-                    <h5>Top Obat</h5>
+                    <h5>Stok Obat Menipis</h5>
                     <table class="ranking-table">
                         <thead>
                             <tr>
@@ -510,7 +510,7 @@ while ($row = mysqli_fetch_assoc($query_tahunan)) {
                         <tbody>
                             <?php
                     // Fetch top 3 medicines based on quantity
-                    $query_top_obat = "SELECT NAMA_OBAT, JUMLAH_STOCK FROM obat ORDER BY JUMLAH_STOCK DESC LIMIT 3";
+                    $query_top_obat = "SELECT NAMA_OBAT, JUMLAH_STOCK FROM obat ORDER BY JUMLAH_STOCK ASC LIMIT 3";
                     $result_top_obat = mysqli_query($conn, $query_top_obat);
                     $rank = 1;
 
