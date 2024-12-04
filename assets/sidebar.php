@@ -6,8 +6,7 @@
     </span>
    </div>
    <a href="dashboard.php">
-    <i class="fas fa-pills me-2">
-    </i>
+   <i class="fas fa-tachometer-alt mr-3"></i>
     dashboard
    </a>
    <a href="obat.php">

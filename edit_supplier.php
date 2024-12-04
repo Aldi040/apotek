@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($conn->query($query_update)) {
         echo "<div class='alert alert-success'>Data supplier berhasil diperbarui!</div>";
-        echo "<a href='index.php' class='btn btn-primary'>Kembali ke Data Supplier</a>";
+        echo "<a href='supplier.php' class='btn btn-primary'>Kembali ke Data Supplier</a>";
         exit;
     } else {
         echo "<div class='alert alert-danger'>Terjadi kesalahan: " . $conn->error . "</div>";
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-            <a href="index.php" class="btn btn-secondary">Batal</a>
+            <a href="supplier.php" class="btn btn-secondary">Batal</a>
         </form>
     <?php endif; ?>
 </body>
