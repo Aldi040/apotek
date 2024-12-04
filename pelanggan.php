@@ -13,6 +13,7 @@ if (isset($_GET['search'])) {
     $result = mysqli_query($conn, $query);
 }
 
+
 if (isset($_GET['id'])) {
     $id_pelanggan = (int) $_GET['id']; // Pastikan ID adalah angka
     $query = "DELETE FROM PELANGGAN WHERE ID_PELANGGAN = $id_pelanggan";
@@ -23,9 +24,9 @@ if (isset($_GET['id'])) {
     }
 }
 
-if (isset($_POST['save'])) {
-    $id_pelanggan = (int) $_POST['ida']; // Pastikan ID adalah angka
-    $nama_pelanggan = mysqli_real_escape_string($conn, $_POST['nama_pelanggan']);
+if (isset($_GET['save'])) {
+    $id_pelanggan = (int) $_GET['ida']; // Pastikan ID adalah angka
+    $nama_pelanggan = mysqli_real_escape_string($conn, $_GET['nama_pelanggan']);
     $query = "UPDATE PELANGGAN SET NAMA_PELANGGAN = '$nama_pelanggan' WHERE ID_PELANGGAN = $id_pelanggan";
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Data pelanggan berhasil diperbarui!'); window.location.href='pelanggan.php';</script>";
@@ -33,7 +34,9 @@ if (isset($_POST['save'])) {
         echo "<script>alert('Terjadi kesalahan saat memperbarui data!'); window.location.href='pelanggan.php';</script>";
     }
 }
+
 ?>
+
 <h1>Tabel Pelanggan</h1>
 <div class="mb-4 d-flex justify-content-between align-items-center">
     <form method="GET" class="d-flex">
@@ -102,6 +105,6 @@ if (isset($_POST['save'])) {
         </tr>
     <?php endforeach; ?>
 </table>
-<?php
+<?php  
 include "assets/footer.php";
 ?>
