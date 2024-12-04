@@ -61,6 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($update_pembayaran) {
             // Redirect ke halaman sukses dengan mengirimkan nama pelanggan dan total pembayaran
+            foreach($_SESSION['obat'] as $value){
+                $query_update_obat = mysqli_query($conn, "UPDATE obat SET JUMLAH_STOCK = JUMLAH_STOCK - {$value['qty']} WHERE ID_OBAT ='{$value['id_obat']}'");
+            }
+             
+            session_unset();
+            session_destroy();
+
             $encoded_nama = urlencode($nama_pelanggan);
             echo "<script>
                     alert('Pembayaran berhasil!');
@@ -212,7 +219,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <button type="submit" class="button">Proses Pembayaran</button>
-            <button type="submit" class="button" name="batal">batal</button>
+        </form>
+        <form action="" method="post">
+        <button type="submit" class="button" name="batal">batal</button>
         </form>
     </div>
 
