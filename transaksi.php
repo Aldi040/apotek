@@ -20,7 +20,7 @@
     <div class="my-2 d-flex justify-content-between">
         <form action="">
         <div class="">
-            <button class="btn btn-primary" onclick="window.location.href='report_transaksi.php'">Reporting</button>
+            <button class="btn btn-primary" onclick="window.location.href='report_transaksi.php'" type="button">Reporting</button>
             <button class="btn btn-success" onclick="window.location.href='form_transaksi_pelanggan.php'" type="button">Tambah Transaksi</button>
         </form>
         </div>
@@ -40,7 +40,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID Transaksi</th>
+                <th>No</th>
                 <th>Nama Pelanggan</th>
                 <th>Tanggal Transaksi</th>
                 <th>Total Harga</th>
@@ -49,9 +49,10 @@
             </tr>
         </thead>
         <tbody>
+        <?php $count = 1; ?>
         <?php foreach($result as $value): ?>
             <tr>
-                <td><?= $value['ID_TRANSAKSI'] ?></td>
+                <td><?= $count; ?></td>
                 <td><?= $value['NAMA_PELANGGAN'] ?></td>
                 <td><?= $value['TANGGAL_TRANSAKSI'] ?></td>
                 <td><?= "Rp. ". number_format($value['TOTAL_HARGA'], 2, ".", ".") ?></td>
@@ -64,9 +65,29 @@
                     </div>
                 </td>
             </tr>
+            <?php $count++; ?>
         <?php endforeach; ?>
         </tbody>
     </table>
+
+
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 <?php
